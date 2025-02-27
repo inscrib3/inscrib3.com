@@ -1,0 +1,41 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import InfrastructureDashboard from './dashboard';
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDV_UcMIFZTz--BKDnPExcSQqGcxuIPc3E",
+  authDomain: "inscrib3-5274d.firebaseapp.com",
+  projectId: "inscrib3-5274d",
+  storageBucket: "inscrib3-5274d.firebasestorage.app",
+  messagingSenderId: "1063261711648",
+  appId: "1:1063261711648:web:cb92ea14b2feba72a9fb45",
+  measurementId: "G-RPYPLTCPC1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+getAnalytics(app);
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <React.StrictMode>
+    <InfrastructureDashboard />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
