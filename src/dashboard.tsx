@@ -95,7 +95,7 @@ const InfrastructureDashboard = () => {
           {/* Products Section */}
           <div>
             <div className="w-full h-full my-4 py-4 border border-white/20 bg-zinc-900/50 rounded-xl flex justify-center items-center">
-              <h2 className="text-center text-lg md:text-xl text-white">Our Products</h2>
+              <h2 className="text-center text-lg md:text-xl text-white">Our Ecosystem</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {/* INSCRIB3 Card */}
