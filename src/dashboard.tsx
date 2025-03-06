@@ -103,7 +103,7 @@ const InfrastructureDashboard = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-mono text-white text-lg md:text-xl mb-2">INSCRIB3</h3>
-                    <p className="text-gray-400 text-xs md:text-sm mb-4">Non custodial and opensource solution.</p>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">Non custodial and open source solution.</p>
                     <a href="https://github.com/inscrib3" target="_blank" rel="noopener noreferrer" className="text-emerald-400 text-xs md:text-sm">&gt;&gt; https://github.com/inscrib3</a>
                   </div>
                   <div className="w-[30px] md:w-[40px]">
