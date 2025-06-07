@@ -130,9 +130,9 @@ const InfrastructureDashboard = () => {
               <div className="bg-black/20 rounded-xl border-2 border-yellow-500 p-4 md:p-6 relative overflow-hidden shadow-lg shadow-yellow-500/50">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-mono text-white text-lg md:text-xl mb-2">BLOK BLOK BLOK - RUNE on BITCOIN</h3>
-                    <p className="text-gray-400 text-xs md:text-sm mb-4">Explore the new non-arbitrary internet on blok.</p>
-                    <a href="https://blokblokblok.xyz/" target="_blank" rel="noopener noreferrer" className="text-yellow-400 text-xs md:text-sm">&gt;&gt; https://blokblokblok.xyz/</a>
+                    <h3 className="font-mono text-white text-lg md:text-xl mb-2">BLOKI.AI - RUNE on BITCOIN</h3>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">AI censorship-resistant dataset.</p>
+                    <a href="https://bloki.ai/" target="_blank" rel="noopener noreferrer" className="text-yellow-400 text-xs md:text-sm">&gt;&gt; https://bloki.ai/</a>
                   </div>
                   <div className="w-[35px] md:w-[50px]">
                     <img src={block} alt="Block logo" className="w-full object-contain" />
