@@ -8,7 +8,7 @@ import github from './github.png';
 import { useState } from 'react';
 
 const InfrastructureDashboard = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-black">
