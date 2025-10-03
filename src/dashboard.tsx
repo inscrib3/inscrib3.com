@@ -12,9 +12,8 @@ const InfrastructureDashboard = () => {
 
   return (
     <div className="min-h-screen bg-black">
-    {/* Navigation a larghezza piena */}
+    {/*
     <div className="relative w-full bg-zinc-900/50">
-      {/* Hamburger Button */}
       <div className="max-w-[1200px] mx-auto px-4">
         <button 
           className="relative md:hidden z-50 p-4"
@@ -28,7 +27,6 @@ const InfrastructureDashboard = () => {
         </button>
       </div>
 
-      {/* Menu Mobile */}
       <nav className={`
         fixed md:relative top-0 left-0 w-full h-screen md:h-auto
         bg-black md:bg-transparent z-40
@@ -58,6 +56,7 @@ const InfrastructureDashboard = () => {
         ))}
       </nav>
     </div>
+    */}
 
     {/* Contenuto principale */}
     <div className="flex justify-center">
@@ -118,7 +117,7 @@ const InfrastructureDashboard = () => {
                   <div>
                     <h3 className="font-mono text-white text-lg md:text-xl mb-2">FLUX - FLUX on FRACTAL</h3>
                     <p className="text-gray-400 text-xs md:text-sm mb-4">Enter inside flux protocol.</p>
-                    <a href="https://flux.inspip.com/" target="_blank" rel="noopener noreferrer" className="text-red-400 text-xs md:text-sm">&gt;&gt; https://flux.inspip.com/</a>
+                    <a href="https://github.com/inscrib3/flux" target="_blank" rel="noopener noreferrer" className="text-red-400 text-xs md:text-sm">&gt;&gt; https://github.com/inscrib3/flux</a>
                   </div>
                   <div className="w-[30px] md:w-[40px]">
                     <img src="https://flux.inspip.com/logo.svg" alt="Ruins logo" className="w-full object-contain" />
@@ -132,7 +131,7 @@ const InfrastructureDashboard = () => {
                   <div>
                     <h3 className="font-mono text-white text-lg md:text-xl mb-2">BLOKI.AI - RUNE on BITCOIN</h3>
                     <p className="text-gray-400 text-xs md:text-sm mb-4">AI censorship-resistant dataset.</p>
-                    <a href="https://bloki.ai/" target="_blank" rel="noopener noreferrer" className="text-yellow-400 text-xs md:text-sm">&gt;&gt; https://bloki.ai/</a>
+                    <a href="https://github.com/blokiai/indexer" target="_blank" rel="noopener noreferrer" className="text-yellow-400 text-xs md:text-sm">&gt;&gt; https://github.com/blokiai/indexer</a>
                   </div>
                   <div className="w-[35px] md:w-[50px]">
                     <img src={block} alt="Block logo" className="w-full object-contain" />
@@ -146,7 +145,7 @@ const InfrastructureDashboard = () => {
                   <div>
                     <h3 className="font-mono text-white text-lg md:text-xl mb-2">INSPIP - PIPE on BITCOIN</h3>
                     <p className="text-gray-400 text-xs md:text-sm mb-4">Enter inside pipe protocol.</p>
-                    <a href="https://inspip.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 text-xs md:text-sm">&gt;&gt; https://inspip.com/</a>
+                    <a href="https://github.com/inscrib3/inspip" target="_blank" rel="noopener noreferrer" className="text-purple-400 text-xs md:text-sm">&gt;&gt; https://github.com/inscrib3/inspip</a>
                   </div>
                   <div className="w-[30px] md:w-[40px]">
                     <img src={logo} alt="Inspip logo" className="w-full object-contain" />
