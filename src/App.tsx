@@ -1,12 +1,511 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import './App.css';
-import './dashboard';
+import logo from './logo.png';
+import { journey, navigation, principles, roadmap } from './siteData';
+
+const ProgrammableScene = lazy(() => import('./ProgrammableScene'));
+
+const WALLET_URL = 'https://wallet.inscrib3.com';
+const WALLET_REPOSITORY = 'https://github.com/inscrib3/arkade-wallet';
+const GITHUB_URL = 'https://github.com/inscrib3';
+
+class SceneErrorBoundary extends React.Component<React.PropsWithChildren, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
+function Arrow({ diagonal = false }: { diagonal?: boolean }) {
+  return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
+}
+
+function Reveal({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    if (!('IntersectionObserver' in window)) {
+      element.classList.add('is-visible');
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && element.classList.add('is-visible'),
+      { threshold: 0.12 },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={`reveal ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function Brand() {
+  return (
+    <a className="brand" href="#top" aria-label="Inscrib3 home">
+      <img src={logo} alt="" />
+      <span>INSCRIB3</span>
+    </a>
+  );
+}
+
+function Navigation() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', open);
+    return () => document.body.classList.remove('menu-open');
+  }, [open]);
+
+  return (
+    <header className="site-header">
+      <nav className="nav-shell" aria-label="Primary navigation">
+        <Brand />
+        <div className={`nav-links ${open ? 'is-open' : ''}`}>
+          {navigation.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+          <a className="nav-mobile-cta" href={WALLET_URL} target="_blank" rel="noreferrer">
+            Launch wallet <Arrow diagonal />
+          </a>
+        </div>
+        <a className="nav-cta" href={WALLET_URL} target="_blank" rel="noreferrer">
+          Launch wallet <Arrow diagonal />
+        </a>
+        <button
+          className={`menu-toggle ${open ? 'is-open' : ''}`}
+          type="button"
+          aria-label={open ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span />
+          <span />
+        </button>
+      </nav>
+    </header>
+  );
+}
+
+function SceneLayer() {
+  const [webgl, setWebgl] = useState(false);
+
+  useEffect(() => {
+    if (navigator.userAgent.toLowerCase().includes('jsdom')) return;
+    try {
+      const canvas = document.createElement('canvas');
+      setWebgl(Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl')));
+    } catch {
+      setWebgl(false);
+    }
+  }, []);
+
+  return (
+    <div className="scene-layer">
+      <div className="scene-fallback" />
+      {webgl && (
+        <SceneErrorBoundary>
+          <Suspense fallback={null}>
+            <ProgrammableScene />
+          </Suspense>
+        </SceneErrorBoundary>
+      )}
+    </div>
+  );
+}
+
+function SectionLabel({ number, children }: React.PropsWithChildren<{ number: string }>) {
+  return (
+    <div className="section-label">
+      <span>{number}</span>
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="hero" id="top">
+      <div className="hero-grid" />
+      <div className="section-inner hero-content">
+        <p className="eyebrow">INSCRIB3 / BUILDING WITH ARKADE</p>
+        <h1>
+          Making Bitcoin
+          <span>Programmable.</span>
+        </h1>
+        <p className="hero-copy">
+          We unlock the potential of Bitcoin's output architecture—turning powerful protocols into useful,
+          open-source applications.
+        </p>
+        <div className="hero-actions">
+          <a className="button button-primary" href="#products">
+            Explore our products <Arrow />
+          </a>
+          <a className="button button-secondary" href="#vision">
+            Discover our vision
+          </a>
+        </div>
+      </div>
+      <a className="scroll-cue" href="#vision">
+        <span>Scroll to explore</span>
+        <i aria-hidden="true" />
+      </a>
+      <div className="hero-index" aria-hidden="true">
+        <span>UTXO / 001</span>
+        <span>ARKADE / ACTIVE</span>
+      </div>
+    </section>
+  );
+}
+
+function Vision() {
+  return (
+    <section className="content-section vision" id="vision">
+      <div className="section-inner">
+        <SectionLabel number="01">The vision</SectionLabel>
+        <Reveal className="editorial-grid">
+          <h2>Bitcoin has more to offer.</h2>
+          <div className="editorial-copy">
+            <p>
+              Bitcoin's output architecture provides a powerful foundation for innovation. But powerful protocols
+              alone are not enough.
+            </p>
+            <p>
+              We turn unexplored possibilities into products people can actually use. Less abstraction. More
+              utility.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal className="signal-strip">
+          {['Outputs', 'Logic', 'Products', 'Utility'].map((item, index) => (
+            <React.Fragment key={item}>
+              <div className="signal-item">
+                <span>0{index + 1}</span>
+                <strong>{item}</strong>
+              </div>
+              {index < 3 && <div className="signal-line"><i /></div>}
+            </React.Fragment>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Journey() {
+  return (
+    <section className="content-section journey-section" id="journey">
+      <div className="section-inner">
+        <SectionLabel number="02">Our UTXO journey</SectionLabel>
+        <Reveal className="journey-intro">
+          <div>
+            <p className="overline">Built through experimentation</p>
+            <h2>Our next chapter stands on years of work.</h2>
+          </div>
+          <div>
+            <p>
+              Before Arkade, Inscrib3 explored the frontier of UTXO-based protocols through wallets, indexers,
+              developer tooling, and real applications.
+            </p>
+            <p>
+              That history is not being replaced. It is the foundation for what we build next.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="journey-ledger">
+          <div className="journey-spine" aria-hidden="true"><i /></div>
+          {journey.map((chapter, index) => (
+            <Reveal className={`journey-chapter ${chapter.active ? 'is-active' : ''}`} key={chapter.year}>
+              <div className="journey-year">
+                <i />
+                <span>{chapter.year}</span>
+              </div>
+              <div className="journey-card">
+                <span className="journey-phase">{chapter.phase}</span>
+                <h3>{chapter.title}</h3>
+                <p>{chapter.description}</p>
+                <div className="journey-projects">
+                  {chapter.projects.map((project) => (
+                    <a key={project.href} href={project.href} target="_blank" rel="noreferrer">
+                      {project.label} <Arrow diagonal />
+                    </a>
+                  ))}
+                </div>
+                <span className="journey-index">0{index + 1}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal className="journey-summary">
+          {[
+            ['Wallets', 'Interfaces for emerging Bitcoin protocols'],
+            ['Indexers', 'Open infrastructure for protocol data'],
+            ['Tooling', 'SDKs and libraries for developers'],
+            ['Products', 'Turning experiments into utility'],
+          ].map(([title, description]) => (
+            <div key={title}>
+              <strong>{title}</strong>
+              <span>{description}</span>
+            </div>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Arkade() {
+  return (
+    <section className="content-section arkade-section">
+      <div className="section-inner">
+        <SectionLabel number="03">Built with Arkade</SectionLabel>
+        <Reveal className="arkade-heading">
+          <h2>A new foundation for what's next.</h2>
+          <div>
+            <p>
+              Inscrib3 is moving new product development to Arkade—an open execution environment for programmable
+              Bitcoin applications.
+            </p>
+            <p>
+              Arkade is developed independently by Ark Labs. We use it to build products; we did not create the
+              protocol.
+            </p>
+            <a className="text-link" href="https://arkadeos.com" target="_blank" rel="noreferrer">
+              Explore Arkade <Arrow diagonal />
+            </a>
+          </div>
+        </Reveal>
+        <Reveal className="architecture" aria-label="Bitcoin to utility architecture">
+          {[
+            ['Foundation', 'Bitcoin'],
+            ['Execution', 'Arkade'],
+            ['Application', 'Inscrib3 products'],
+            ['Outcome', 'Real-world utility'],
+          ].map(([label, title], index) => (
+            <React.Fragment key={title}>
+              <div className={`architecture-node architecture-node-${index + 1}`}>
+                <span>{label}</span>
+                <strong>{title}</strong>
+              </div>
+              {index < 3 && <div className="architecture-link"><span /></div>}
+            </React.Fragment>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function WalletShowcase() {
+  return (
+    <section className="content-section product-section" id="products">
+      <div className="section-inner">
+        <SectionLabel number="04">First product</SectionLabel>
+        <Reveal className="product-intro">
+          <div>
+            <p className="overline">Meet the first building block</p>
+            <h2>Inscrib3 Wallet</h2>
+          </div>
+          <div className="product-copy">
+            <h3>Your gateway to programmable Bitcoin.</h3>
+            <p>
+              Our first open-source product for Bitcoin-native experiences. Available as a browser extension and an
+              installable progressive web app.
+            </p>
+            <p className="experimental-note">Experimental software. Review the project documentation before use.</p>
+            <div className="product-actions">
+              <a className="button button-primary" href={WALLET_URL} target="_blank" rel="noreferrer">
+                Launch wallet <Arrow diagonal />
+              </a>
+              <a className="button button-secondary" href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
+                Explore open source <Arrow diagonal />
+              </a>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="wallet-stage">
+          <div className="wallet-orbit wallet-orbit-one" />
+          <div className="wallet-orbit wallet-orbit-two" />
+          <div className="browser-device">
+            <div className="browser-bar">
+              <div><i /><i /><i /></div>
+              <span>wallet.inscrib3.com</span>
+              <span>↗</span>
+            </div>
+            <iframe src={WALLET_URL} title="Live Inscrib3 Wallet preview" loading="lazy" tabIndex={-1} />
+            <a href={WALLET_URL} target="_blank" rel="noreferrer" aria-label="Open Inscrib3 Wallet" />
+          </div>
+          <div className="extension-device">
+            <div className="extension-top">
+              <img src={logo} alt="" />
+              <span>Browser extension</span>
+            </div>
+            <iframe src={WALLET_URL} title="Inscrib3 browser extension interface preview" loading="lazy" tabIndex={-1} />
+            <a href={WALLET_REPOSITORY} target="_blank" rel="noreferrer" aria-label="View browser extension source" />
+          </div>
+          <div className="product-badge product-badge-one"><span>01</span> PWA</div>
+          <div className="product-badge product-badge-two"><span>02</span> EXTENSION</div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Principles() {
+  return (
+    <section className="content-section principles-section">
+      <div className="section-inner">
+        <SectionLabel number="05">Why we build</SectionLabel>
+        <Reveal className="principles-heading">
+          <h2>Protocols are possibilities.<br />Products create utility.</h2>
+        </Reveal>
+        <div className="principles-grid">
+          {principles.map((principle) => (
+            <Reveal className="principle-card" key={principle.title}>
+              <div className={`principle-object principle-object-${principle.shape}`} aria-hidden="true">
+                <i /><i /><i />
+              </div>
+              <div className="principle-number">{principle.number}</div>
+              <h3>{principle.title}</h3>
+              <p>{principle.description}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Roadmap() {
+  return (
+    <section className="content-section roadmap-section" id="roadmap">
+      <div className="section-inner">
+        <SectionLabel number="06">Product roadmap</SectionLabel>
+        <Reveal className="roadmap-intro">
+          <h2>We're only getting started.</h2>
+          <p>
+            One product is the beginning. Each release moves us closer to making programmable Bitcoin useful.
+          </p>
+        </Reveal>
+        <div className="roadmap-system">
+          <div className="roadmap-track" aria-hidden="true"><span /></div>
+          {roadmap.map((item, index) => (
+            <Reveal className={`roadmap-node ${item.active ? 'is-active' : ''}`} key={item.status}>
+              <div className="roadmap-marker"><i />0{index + 1}</div>
+              <span className="roadmap-status">{item.status}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OpenSource() {
+  return (
+    <section className="content-section open-section" id="open-source">
+      <div className="section-inner open-layout">
+        <div>
+          <SectionLabel number="07">Open source</SectionLabel>
+          <Reveal>
+            <h2>Built in the open.</h2>
+            <p>
+              Useful Bitcoin infrastructure grows through experimentation, transparency, and community
+              participation.
+            </p>
+            <a className="button button-primary" href={GITHUB_URL} target="_blank" rel="noreferrer">
+              Explore our GitHub <Arrow diagonal />
+            </a>
+          </Reveal>
+        </div>
+        <Reveal className="code-window" aria-label="Inscrib3 open source repositories">
+          <div className="code-window-top">
+            <span>INSCRIB3 / PUBLIC</span>
+            <i /><i /><i />
+          </div>
+          <div className="code-line"><span>01</span><strong>arkade-wallet</strong><em>public</em></div>
+          <div className="code-line"><span>02</span><strong>inscrib3.com</strong><em>public</em></div>
+          <div className="code-pulse"><i /></div>
+          <a href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
+            github.com/inscrib3/arkade-wallet <Arrow diagonal />
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function FinalCta() {
+  return (
+    <section className="final-section">
+      <div className="final-halo" aria-hidden="true"><i /><i /><i /></div>
+      <Reveal className="final-content">
+        <p className="eyebrow">THE NEXT OUTPUT IS YOURS</p>
+        <h2>The future of Bitcoin is something we build.</h2>
+        <p>Explore our first product. Follow what comes next.</p>
+        <div className="hero-actions">
+          <a className="button button-primary" href={WALLET_URL} target="_blank" rel="noreferrer">
+            Launch wallet <Arrow diagonal />
+          </a>
+          <a className="button button-secondary" href="#roadmap">
+            Explore the roadmap
+          </a>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <Brand />
+      <p>Making Bitcoin programmable.</p>
+      <div>
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://x.com/inscrib3" target="_blank" rel="noreferrer">X</a>
+        <a href="https://arkadeos.com" target="_blank" rel="noreferrer">Arkade</a>
+      </div>
+      <span>© {new Date().getFullYear()} INSCRIB3</span>
+    </footer>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <div className="InfrastructureDashboard"></div>
+    <div className="site">
+      <a className="skip-link" href="#vision">Skip to content</a>
+      <SceneLayer />
+      <Navigation />
+      <main>
+        <Hero />
+        <Vision />
+        <Journey />
+        <Arkade />
+        <WalletShowcase />
+        <Principles />
+        <Roadmap />
+        <OpenSource />
+        <FinalCta />
+      </main>
+      <Footer />
     </div>
   );
 }

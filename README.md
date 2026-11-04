@@ -1,56 +1,106 @@
-# Inscrib3 website
+# Inscrib3
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Making Bitcoin programmable.**
 
-## Deployment
+Inscrib3 is an independent product-building team exploring the potential of
+Bitcoin's output architecture. We turn protocols and infrastructure into
+useful, accessible, open-source applications.
 
-Pushes to `main` are built and deployed to GitHub Pages by
-`.github/workflows/deploy-pages.yml`. The site uses `inscrib3.com` as its custom
-domain (configured in `public/CNAME`).
+Our next generation of products is built with
+[Arkade](https://arkadeos.com), an open execution environment for programmable
+Bitcoin applications. Bitcoin remains the foundation; Arkade provides the
+execution environment; Inscrib3 builds the products.
 
-In the repository settings, set **Pages > Build and deployment > Source** to
-**GitHub Actions**. Configure the domain's DNS according to GitHub's custom
-domain documentation.
+> We are not building another blockchain. We are building useful products on
+> Bitcoin.
 
-## Available Scripts
+## Our journey
 
-In the project directory, you can run:
+Our current direction builds on years of work across UTXO-based protocols:
 
-### `npm start`
+- **Protocol access:** wallet experiences such as
+  [Inspip](https://github.com/inscrib3/inspip) for PIPE.
+- **Open infrastructure:** indexers for
+  [PIPE](https://github.com/inscrib3/pipe-indexer),
+  [Flux](https://github.com/inscrib3/flux-indexer), and
+  [BlokAI](https://github.com/inscrib3/blokiai-indexer).
+- **Developer tooling:** a
+  [TypeScript SDK](https://github.com/inscrib3/sdk),
+  [React library](https://github.com/inscrib3/react), and
+  [reference application](https://github.com/inscrib3/example).
+- **Programmable Bitcoin:** new open-source products built with Arkade.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+That history is not being replaced. It is the foundation for what we build
+next.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Inscrib3 Wallet
 
-### `npm test`
+[Inscrib3 Wallet](https://wallet.inscrib3.com) is our first product in this new
+chapter. It is available as a browser extension and an installable Progressive
+Web App.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Launch: [wallet.inscrib3.com](https://wallet.inscrib3.com)
+- Source code: [inscrib3/arkade-wallet](https://github.com/inscrib3/arkade-wallet)
 
-### `npm run build`
+The wallet is experimental software. Review its documentation and risk notices
+before using it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## This website
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The website is an interactive, responsive experience built with:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React and TypeScript
+- React Three Fiber and Three.js
+- CSS-based responsive design and motion
+- GitHub Pages
 
-### `npm run eject`
+The WebGL experience lives in `src/ProgrammableScene.tsx` and is loaded lazily.
+The site includes a CSS fallback when WebGL is unavailable and supports reduced
+motion preferences. Roadmap and journey content is configured in
+`src/siteData.ts`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Development
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm install --legacy-peer-deps
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Open [http://localhost:3000](http://localhost:3000).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Validation
 
-## Learn More
+```bash
+npm run build
+CI=true npm test -- --watchAll=false
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Pushes to `main` are built and deployed by
+`.github/workflows/deploy-pages.yml`. GitHub Pages must use **GitHub Actions** as
+its source and `inscrib3.com` as its custom domain.
+
+## Open source
+
+We build in public because useful Bitcoin infrastructure grows through
+experimentation, transparency, and community participation.
+
+- GitHub: [github.com/inscrib3](https://github.com/inscrib3)
+- Website: [inscrib3.com](https://inscrib3.com)
+- X: [x.com/inscrib3](https://x.com/inscrib3)
+
+Issues and pull requests are welcome. Please review the documentation and
+contribution guidelines of each repository before contributing.
+
+## Support Inscrib3
+
+If you find our open-source work useful, you can support continued development
+with a Bitcoin donation:
+
+```text
+bc1qv8xerenssu3dzphp2kf88wgs5h2ytu8ke2x7yl
+```
+
+Please verify the address carefully before sending. Bitcoin transactions are
+irreversible.

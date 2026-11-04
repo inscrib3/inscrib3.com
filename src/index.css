@@ -1,152 +1,76 @@
-/* index.css */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary-color: #70FFAF;
-  --primary-light: #9DFFC9;
-  --text-light: #D7FFE9;
-  --background-dark: #0E0E0E;
-  --shadow-green: 0px 0px 12.8px 1px #5DD694;
-  --shadow-red: 0px 0px 12.8px 1px #BF2323;
-  --shadow-orange: 0px 0px 12.8px 1px #FFA500;
-  --shadow-purple: 0px 0px 12.8px 1px #D67BFF;
+  --black: #000000;
+  --ink: #080909;
+  --surface: #0d0f0f;
+  --emerald: #34d399;
+  --emerald-soft: #a7f3d0;
+  --purple: #a855f7;
+  --text: #f3f5f4;
+  --muted: #9ba3a0;
+  --line: rgba(255, 255, 255, 0.13);
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
 }
 
 body {
-  @apply bg-black;
-  font-family: 'IBM Plex Mono', monospace;
+  margin: 0;
+  min-width: 320px;
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Layout principale */
-.dashboard-container {
-  @apply relative w-[1440px] min-h-[1887px] bg-black mx-auto;
+body.menu-open {
+  overflow: hidden;
 }
 
-/* Navigation */
-.nav-container {
-  @apply absolute w-full h-[85px] left-0 top-0 bg-[#0E0E0E];
+button,
+a {
+  color: inherit;
 }
 
-.nav-buttons-container {
-  @apply absolute flex flex-row items-start gap-[40px] w-[1060px] h-[45px];
-  left: calc(50% - 530px);
-  top: 20px;
+a {
+  text-decoration: none;
 }
 
-.nav-button {
-  @apply flex justify-center items-center px-[26px] py-[12px] w-[180px] h-[45px]
-         border border-white rounded-[90px] font-['IBM_Plex_Mono'] font-medium 
-         text-[16px] leading-[21px] text-[#D7FFE9] lowercase transition-colors;
+button {
+  font: inherit;
 }
 
-/* Hero Section Styles */
-.hero-title {
-  @apply font-['IBM_Plex_Mono'] font-bold text-[36px] leading-[47px] text-[#70FFAF];
+::selection {
+  background: var(--emerald);
+  color: var(--black);
 }
 
-.hero-subtitle {
-  @apply font-['IBM_Plex_Mono'] font-medium text-[16px] leading-[21px];
+:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 4px;
 }
 
-.hero-description {
-  @apply font-['IBM_Plex_Mono'] font-medium text-[16px] leading-[21px] text-white;
-}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-/* Logo animation */
-.logo-animate {
-  @apply transition-all duration-300;
-}
-
-.logo-animate:hover {
-  @apply transform scale-105;
-}
-
-/* Products Section */
-.products-section {
-  @apply absolute w-[1072px] h-[470px] left-[184px] top-[559px];
-}
-
-.products-header {
-  @apply flex justify-center items-center w-[1071px] h-[70px] bg-[#0E0E0E] 
-         border border-[#858585] rounded-[20px] font-['IBM_Plex_Mono'] 
-         font-medium text-[20px] leading-[26px] text-white;
-}
-
-.product-card {
-  @apply bg-[#0E0E0E] rounded-[20px] p-[30px];
-}
-
-.product-card-inscrib3 {
-  @apply border border-[#5DD694] shadow-[0_0_12.8px_1px_#5DD694];
-}
-
-.product-card-ruins {
-  @apply border border-[#BF2323] shadow-[0_0_12.8px_1px_#BF2323];
-}
-
-.product-card-blok {
-  @apply border border-[#FFA500] shadow-[0_0_12.8px_1px_#FFA500];
-}
-
-.product-card-inspip {
-  @apply border border-[#D67BFF] shadow-[0_0_12.8px_1px_#D67BFF];
-}
-
-.product-title {
-  @apply font-['IBM_Plex_Sans'] font-bold text-[24px] leading-[31px] text-white;
-}
-
-.product-description {
-  @apply font-['IBM_Plex_Mono'] font-medium text-[14px] leading-[18px] text-white;
-}
-
-.product-link {
-  @apply font-['IBM_Plex_Mono'] font-bold italic text-[15px] leading-[20px] text-right;
-}
-
-/* Power of BTC Section */
-.power-btc-section {
-  @apply absolute w-[1072px] h-[369px] left-[184px] top-[1106px] 
-         flex flex-row items-center gap-[50px];
-}
-
-.power-btc-title {
-  @apply font-['IBM_Plex_Mono'] font-bold text-[20px] leading-[26px] text-[#9DFFC9];
-}
-
-.tag {
-  @apply px-[12px] py-[5px] bg-white rounded-[50px] font-['IBM_Plex_Mono'] 
-         font-medium text-[13px] leading-[17px] text-black;
-}
-
-.feature-card {
-  @apply bg-[#0E0E0E] border border-[#70FFAF] rounded-[30px] p-[20px];
-}
-
-.feature-title {
-  @apply font-['IBM_Plex_Mono'] font-bold text-[18px] leading-[23px] text-white;
-}
-
-/* About Us Section */
-.about-us-section {
-  @apply absolute w-[1072px] h-[233px] left-[184px] top-[1552px];
-}
-
-.about-us-card {
-  @apply bg-[#0E0E0E] border border-[#70FFAF] shadow-[0_0_12.8px_1px_rgba(93,214,148,0.35)]
-         rounded-[30px] w-[340px] h-[133px];
-}
-
-.about-us-title {
-  @apply font-['IBM_Plex_Mono'] font-semibold text-[20px] leading-[26px] text-white;
-}
-
-.about-us-button {
-  @apply bg-[#70FFAF] rounded-[20px] px-[18px] py-[8px] font-['IBM_Plex_Mono'] 
-         font-medium text-[14px] leading-[18px] text-black;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
