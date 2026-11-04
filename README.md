@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Inscrib3 website
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Deployment
+
+Pushes to `main` are built and deployed to GitHub Pages by
+`.github/workflows/deploy-pages.yml`. The site uses `inscrib3.com` as its custom
+domain (configured in `public/CNAME`).
+
+In the repository settings, set **Pages > Build and deployment > Source** to
+**GitHub Actions**. Configure the domain's DNS according to GitHub's custom
+domain documentation.
 
 ## Available Scripts
 
