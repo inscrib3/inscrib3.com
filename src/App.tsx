@@ -8,6 +8,7 @@ const ProgrammableScene = lazy(() => import('./ProgrammableScene'));
 const WALLET_URL = 'https://wallet.inscrib3.com';
 const WALLET_REPOSITORY = 'https://github.com/inscrib3/arkade-wallet';
 const GITHUB_URL = 'https://github.com/inscrib3';
+const DOCS_URL = 'https://docs.inscrib3.com';
 
 class SceneErrorBoundary extends React.Component<React.PropsWithChildren, { failed: boolean }> {
   state = { failed: false };
@@ -446,9 +447,14 @@ function OpenSource() {
             <span>INSCRIB3 / PUBLIC</span>
             <i /><i /><i />
           </div>
-          <div className="code-line"><span>01</span><strong>arkade-wallet</strong><em>public</em></div>
-          <div className="code-line"><span>02</span><strong>inscrib3.com</strong><em>public</em></div>
-          <div className="code-pulse"><i /></div>
+           <div className="code-line"><span>01</span><strong>arkade-wallet</strong><em>public</em></div>
+           <div className="code-line"><span>02</span><strong>inscrib3.com</strong><em>public</em></div>
+           <div className="code-line">
+             <span>03</span>
+             <strong><a href={DOCS_URL} target="_blank" rel="noreferrer">docs.inscrib3.com</a></strong>
+             <em>public</em>
+           </div>
+           <div className="code-pulse"><i /></div>
           <a href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
             github.com/inscrib3/arkade-wallet <Arrow diagonal />
           </a>

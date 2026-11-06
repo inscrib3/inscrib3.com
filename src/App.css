@@ -1234,6 +1234,8 @@ footer {
 
 .code-line span { color: #525854; }
 .code-line strong { font-weight: 400; }
+.code-line a { transition: color 200ms ease; }
+.code-line a:hover { color: var(--emerald); }
 .code-line em { color: var(--emerald); font-size: 8px; font-style: normal; text-transform: uppercase; }
 
 .code-pulse {

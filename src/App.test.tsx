@@ -13,6 +13,10 @@ test('renders the Inscrib3 positioning and wallet link', () => {
     'href',
     'https://docs.inscrib3.com',
   );
+  expect(screen.getByRole('link', { name: /docs\.inscrib3\.com/i })).toHaveAttribute(
+    'href',
+    'https://docs.inscrib3.com',
+  );
   expect(screen.getByRole('heading', { name: /our next chapter stands on years of work/i })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /pipe indexer/i })).toHaveAttribute(
     'href',
