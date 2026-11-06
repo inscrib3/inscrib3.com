@@ -73,7 +73,13 @@ function Navigation() {
         <Brand />
         <div className={`nav-links ${open ? 'is-open' : ''}`}>
           {navigation.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <a
+              key={item.href}
+              href={item.href}
+              target={item.href.startsWith('http') ? '_blank' : undefined}
+              rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+              onClick={() => setOpen(false)}
+            >
               {item.label}
             </a>
           ))}
