@@ -6,6 +6,7 @@ import { journey, navigation, principles, roadmap } from './siteData';
 const ProgrammableScene = lazy(() => import('./ProgrammableScene'));
 
 const WALLET_URL = 'https://wallet.inscrib3.com';
+const EXTENSION_URL = 'https://chromewebstore.google.com/detail/inscrib3/hafphignbjdmblopkophkohgnphalclg';
 const WALLET_REPOSITORY = 'https://github.com/inscrib3/arkade-wallet';
 const GITHUB_URL = 'https://github.com/inscrib3';
 const DOCS_URL = 'https://docs.inscrib3.com';
@@ -24,6 +25,15 @@ class SceneErrorBoundary extends React.Component<React.PropsWithChildren, { fail
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
+}
+
+function ExtensionIcon() {
+  return (
+    <svg className="extension-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 3.5h6v3h3.5V12h-3v2.5H12V18H6.5V9H9V3.5Z" />
+      <path d="M4 8.5h2.5V18H16v2.5H4V8.5Z" />
+    </svg>
+  );
 }
 
 function Reveal({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) {
@@ -76,6 +86,7 @@ function Navigation() {
           {navigation.map((item) => (
             <a
               key={item.href}
+              className={item.label === 'Docs' ? 'docs-nav-link' : undefined}
               href={item.href}
               target={item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
@@ -84,12 +95,12 @@ function Navigation() {
               {item.label}
             </a>
           ))}
-          <a className="nav-mobile-cta" href={WALLET_URL} target="_blank" rel="noreferrer">
-            Launch wallet <Arrow diagonal />
+          <a className="nav-mobile-cta" href={EXTENSION_URL} target="_blank" rel="noreferrer">
+            <span><ExtensionIcon /> Add to Chrome</span> <Arrow diagonal />
           </a>
         </div>
-        <a className="nav-cta" href={WALLET_URL} target="_blank" rel="noreferrer">
-          Launch wallet <Arrow diagonal />
+        <a className="nav-cta" href={EXTENSION_URL} target="_blank" rel="noreferrer">
+          <ExtensionIcon /> Add to Chrome <Arrow diagonal />
         </a>
         <button
           className={`menu-toggle ${open ? 'is-open' : ''}`}
@@ -147,23 +158,24 @@ function Hero() {
     <section className="hero" id="top">
       <div className="hero-grid" />
       <div className="section-inner hero-content">
-        <p className="eyebrow">INSCRIB3 / BUILDING WITH ARKADE</p>
+        <p className="eyebrow">INSCRIB3 WALLET / AVAILABLE FOR CHROME</p>
         <h1>
           Making Bitcoin
           <span>Programmable.</span>
         </h1>
         <p className="hero-copy">
-          We unlock the potential of Bitcoin's output architecture—turning powerful protocols into useful,
-          open-source applications.
+          Put programmable Bitcoin in your browser. Install the Inscrib3 Wallet extension and access
+          Bitcoin-native experiences without leaving your tab.
         </p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#products">
-            Explore our products <Arrow />
+          <a className="button button-primary button-extension" href={EXTENSION_URL} target="_blank" rel="noreferrer">
+            <ExtensionIcon /> Get the Chrome extension <Arrow diagonal />
           </a>
-          <a className="button button-secondary" href="#vision">
-            Discover our vision
+          <a className="button button-secondary" href="#products">
+            See how it works <Arrow />
           </a>
         </div>
+        <p className="hero-trust"><i /> Browser extension <span>·</span> Open source <span>·</span> Built with Arkade</p>
       </div>
       <a className="scroll-cue" href="#vision">
         <span>Scroll to explore</span>
@@ -330,18 +342,21 @@ function WalletShowcase() {
           <div className="product-copy">
             <h3>Your gateway to programmable Bitcoin.</h3>
             <p>
-              Our first open-source product for Bitcoin-native experiences. Available as a browser extension and an
-              installable progressive web app.
+              Our open-source wallet for Bitcoin-native experiences, designed first for your browser. Install the
+              extension for the fastest, most integrated way to use Inscrib3.
             </p>
             <p className="experimental-note">Experimental software. Review the project documentation before use.</p>
             <div className="product-actions">
-              <a className="button button-primary" href={WALLET_URL} target="_blank" rel="noreferrer">
-                Launch wallet <Arrow diagonal />
+              <a className="button button-primary button-extension" href={EXTENSION_URL} target="_blank" rel="noreferrer">
+                <ExtensionIcon /> Install for Chrome <Arrow diagonal />
               </a>
               <a className="button button-secondary" href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
-                Explore open source <Arrow diagonal />
+                View source <Arrow diagonal />
               </a>
             </div>
+            <a className="pwa-alternative" href={WALLET_URL} target="_blank" rel="noreferrer">
+              Prefer not to install? Open the web wallet <Arrow diagonal />
+            </a>
           </div>
         </Reveal>
 
@@ -355,7 +370,7 @@ function WalletShowcase() {
               <span>↗</span>
             </div>
             <iframe src={WALLET_URL} title="Live Inscrib3 Wallet preview" loading="lazy" tabIndex={-1} />
-            <a href={WALLET_URL} target="_blank" rel="noreferrer" aria-label="Open Inscrib3 Wallet" />
+            <a href={WALLET_URL} target="_blank" rel="noreferrer" aria-label="Open the Inscrib3 web wallet" />
           </div>
           <div className="extension-device">
             <div className="extension-top">
@@ -363,10 +378,11 @@ function WalletShowcase() {
               <span>Browser extension</span>
             </div>
             <iframe src={WALLET_URL} title="Inscrib3 browser extension interface preview" loading="lazy" tabIndex={-1} />
-            <a href={WALLET_REPOSITORY} target="_blank" rel="noreferrer" aria-label="View browser extension source" />
+            <a href={EXTENSION_URL} target="_blank" rel="noreferrer" aria-label="Install the Inscrib3 Chrome extension" />
           </div>
-          <div className="product-badge product-badge-one"><span>01</span> PWA</div>
-          <div className="product-badge product-badge-two"><span>02</span> EXTENSION</div>
+          <div className="extension-callout"><span>Recommended</span><strong>Install once.<br />Use from any tab.</strong></div>
+          <div className="product-badge product-badge-one"><span>02</span> WEB APP</div>
+          <div className="product-badge product-badge-two"><span>01</span> CHROME EXTENSION</div>
         </Reveal>
       </div>
     </section>
@@ -393,6 +409,34 @@ function Principles() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function DeveloperCta() {
+  return (
+    <section className="developer-section" id="developers">
+      <div className="section-inner">
+        <Reveal className="developer-card">
+          <div className="developer-signal" aria-hidden="true"><i /><i /><i /></div>
+          <div className="developer-copy">
+            <p className="overline">For developers / Third-party integration</p>
+            <h2>Build with Inscrib3.</h2>
+            <p>
+              Integrate programmable Bitcoin experiences into your product. Start with the technical documentation,
+              implementation guides, and open-source wallet code.
+            </p>
+          </div>
+          <div className="developer-actions">
+            <a className="button button-primary" href={DOCS_URL} target="_blank" rel="noreferrer">
+              Read integration docs <Arrow diagonal />
+            </a>
+            <a className="button button-secondary" href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
+              Explore the code <Arrow diagonal />
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -471,13 +515,13 @@ function FinalCta() {
       <Reveal className="final-content">
         <p className="eyebrow">THE NEXT OUTPUT IS YOURS</p>
         <h2>The future of Bitcoin is something we build.</h2>
-        <p>Explore our first product. Follow what comes next.</p>
+        <p>Install the wallet in Chrome and keep programmable Bitcoin one click away.</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={WALLET_URL} target="_blank" rel="noreferrer">
-            Launch wallet <Arrow diagonal />
+          <a className="button button-primary button-extension" href={EXTENSION_URL} target="_blank" rel="noreferrer">
+            <ExtensionIcon /> Add Inscrib3 to Chrome <Arrow diagonal />
           </a>
-          <a className="button button-secondary" href="#roadmap">
-            Explore the roadmap
+          <a className="button button-secondary" href={WALLET_URL} target="_blank" rel="noreferrer">
+            Continue on the web <Arrow diagonal />
           </a>
         </div>
       </Reveal>
@@ -494,6 +538,8 @@ function Footer() {
         <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://x.com/inscrib3" target="_blank" rel="noreferrer">X</a>
         <a href="https://arkadeos.com" target="_blank" rel="noreferrer">Arkade</a>
+        <a href={DOCS_URL} target="_blank" rel="noreferrer">Docs</a>
+        <a href={EXTENSION_URL} target="_blank" rel="noreferrer">Chrome extension</a>
       </div>
       <span>© {new Date().getFullYear()} INSCRIB3</span>
     </footer>
@@ -512,6 +558,7 @@ function App() {
         <Journey />
         <Arkade />
         <WalletShowcase />
+        <DeveloperCta />
         <Principles />
         <Roadmap />
         <OpenSource />

@@ -2,7 +2,7 @@ export const roadmap = [
   {
     status: 'Available now',
     title: 'Inscrib3 Wallet',
-    description: 'Browser extension and installable PWA.',
+    description: 'Chrome extension, with a web wallet available as an alternative.',
     active: true,
   },
   {
