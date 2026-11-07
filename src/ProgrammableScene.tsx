@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Canvas, ThreeEvent, useFrame, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
 
 const EMERALD = new THREE.Color('#34D399');
 const PURPLE = new THREE.Color('#A855F7');
@@ -8,13 +9,32 @@ const PEARL = new THREE.Color('#F4F7F6');
 
 function LogoMonolith({ reducedMotion }: { reducedMotion: boolean }) {
   const group = useRef<THREE.Group>(null);
-  const texture = useLoader(THREE.TextureLoader, `${process.env.PUBLIC_URL}/logo.png`);
+  const svg = useLoader(SVGLoader, `${process.env.PUBLIC_URL}/logo.svg`);
+  const logoParts = useMemo(() => {
+    const scale = 0.015;
 
-  useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 8;
-    texture.needsUpdate = true;
-  }, [texture]);
+    return svg.paths.slice(1).flatMap((path, pathIndex) => {
+      const spine = pathIndex === 1;
+      const depth = spine ? 34 : 28;
+
+      return SVGLoader.createShapes(path).map((shape) => {
+        const geometry = new THREE.ExtrudeGeometry(shape, {
+          depth,
+          bevelEnabled: true,
+          bevelSegments: 4,
+          bevelSize: spine ? 1.8 : 2.5,
+          bevelThickness: spine ? 2.2 : 3,
+          curveSegments: 18,
+        });
+
+        geometry.scale(scale, -scale, scale);
+        geometry.translate(-150 * scale, 150 * scale, -(depth * scale) / 2);
+        geometry.computeVertexNormals();
+
+        return { geometry, spine };
+      });
+    });
+  }, [svg]);
 
   useFrame((state) => {
     if (!group.current) return;
@@ -29,45 +49,51 @@ function LogoMonolith({ reducedMotion }: { reducedMotion: boolean }) {
 
     group.current.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
-      const material = object.material as THREE.MeshBasicMaterial;
-      const baseOpacity = object.name === 'logo-face' ? 1 : 0.24;
-      material.opacity = opacity * baseOpacity;
+      const material = object.material as THREE.MeshPhysicalMaterial;
+      material.opacity = opacity;
+      material.emissiveIntensity = object.name === 'logo-spine'
+        ? THREE.MathUtils.lerp(0.68, 1.25, dissolve)
+        : THREE.MathUtils.lerp(0.08, 0.34, dissolve);
     });
 
     if (!reducedMotion) {
-      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.pointer.x * 0.08, 0.035);
-      group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -state.pointer.y * 0.045, 0.035);
+      const time = state.clock.elapsedTime;
+      const targetRotationY = -0.12 + Math.sin(time * 0.38) * 0.07 + state.pointer.x * 0.07;
+      const targetRotationX = 0.025 + Math.sin(time * 0.46) * 0.025 - state.pointer.y * 0.035;
+      const targetRotationZ = Math.sin(time * 0.3) * 0.012;
+
+      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotationY, 0.035);
+      group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetRotationX, 0.035);
+      group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, targetRotationZ, 0.025);
+      group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, Math.sin(time * 0.52) * 0.055, 0.03);
     }
   });
 
   return (
-    <group ref={group} position={[2, 0, 0.2]}>
-      {Array.from({ length: 9 }, (_, index) => (
-        <mesh key={index} name="logo-depth" position={[0, 0, -0.18 + index * 0.022]}>
-          <planeGeometry args={[2.7, 3.2]} />
-          <meshBasicMaterial
-            map={texture}
-            color={index < 4 ? '#552A78' : '#1A5C47'}
+    <group ref={group} position={[2, 0, 0.2]} rotation={[0.03, -0.16, -0.015]}>
+      {logoParts.map(({ geometry, spine }, index) => (
+        <mesh
+          key={index}
+          name={spine ? 'logo-spine' : 'logo-shell'}
+          geometry={geometry}
+          position={spine ? [0, 0, 0.08] : [0, 0, 0]}
+          castShadow
+          receiveShadow
+        >
+          <meshPhysicalMaterial
+            color={spine ? '#70ffaf' : '#f9f9f9'}
+            emissive={spine ? '#34d399' : '#ffffff'}
+            emissiveIntensity={spine ? 0.52 : 0.12}
+            metalness={spine ? 0.08 : 0.12}
+            roughness={spine ? 0.16 : 0.24}
+            clearcoat={spine ? 0.9 : 0.65}
+            clearcoatRoughness={spine ? 0.1 : 0.18}
             transparent
-            opacity={0.24}
-            alphaTest={0.08}
-            depthWrite={false}
-            toneMapped={false}
           />
         </mesh>
       ))}
-      <mesh name="logo-face" position={[0, 0, 0.035]}>
-        <planeGeometry args={[2.7, 3.2]} />
-        <meshBasicMaterial
-          map={texture}
-          transparent
-          opacity={1}
-          alphaTest={0.08}
-          depthWrite={false}
-          toneMapped={false}
-        />
-      </mesh>
-      <pointLight position={[0, 0, -0.4]} color={EMERALD} intensity={3.5} distance={4} />
+      <pointLight position={[0, 0.15, 1.4]} color={EMERALD} intensity={2.2} distance={4.5} />
+      <pointLight position={[0.7, -0.8, -0.5]} color={PURPLE} intensity={2.4} distance={4} />
     </group>
   );
 }
@@ -91,12 +117,14 @@ function Module({ index, origin, destination, part, reducedMotion }: ModuleProps
     const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = reducedMotion ? 0 : Math.min(window.scrollY / maxScroll, 1);
     const unfold = THREE.MathUtils.smoothstep(progress, 0.03, 0.34);
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.15, 0.24);
     const ecosystem = THREE.MathUtils.smoothstep(progress, 0.58, 0.94);
     const x = THREE.MathUtils.lerp(origin[0], destination[0], unfold);
     const y = THREE.MathUtils.lerp(origin[1], destination[1], unfold);
     const z = THREE.MathUtils.lerp(origin[2], destination[2], unfold);
     const orbit = reducedMotion ? 0 : state.clock.elapsedTime * (0.08 + (index % 4) * 0.012);
 
+    mesh.current.visible = reveal > 0.005;
     mesh.current.position.set(
       x + Math.sin(orbit + index) * 0.08 * unfold,
       y + Math.cos(orbit * 0.8 + index) * 0.07 * unfold,
@@ -113,7 +141,7 @@ function Module({ index, origin, destination, part, reducedMotion }: ModuleProps
       material.current.color.lerpColors(sourceColor, destinationColor, unfold);
       material.current.emissive.lerpColors(sourceColor, destinationColor, unfold);
       material.current.emissiveIntensity = hovered ? 2.4 : THREE.MathUtils.lerp(part === 'spine' ? 1.1 : 0.16, 0.85, unfold);
-      material.current.opacity = THREE.MathUtils.lerp(part === 'shell' ? 0.1 : 0.16, index % 7 === 0 ? 0.62 : 0.92, unfold);
+      material.current.opacity = reveal * THREE.MathUtils.lerp(0.04, index % 7 === 0 ? 0.62 : 0.92, unfold);
     }
   });
 
@@ -127,6 +155,7 @@ function Module({ index, origin, destination, part, reducedMotion }: ModuleProps
     <mesh
       ref={mesh}
       position={origin}
+      visible={false}
       onPointerOver={(event) => handlePointer(event, true)}
       onPointerOut={(event) => handlePointer(event, false)}
     >
@@ -145,7 +174,8 @@ function Module({ index, origin, destination, part, reducedMotion }: ModuleProps
         roughness={0.22}
         metalness={0.72}
         transparent
-        opacity={part === 'spine' ? 0.16 : 0.1}
+        opacity={0}
+        depthWrite={false}
       />
     </mesh>
   );
@@ -243,7 +273,13 @@ function Universe({ reducedMotion }: { reducedMotion: boolean }) {
         />
       ))}
       <lineSegments ref={line} geometry={connectionGeometry}>
-        <lineBasicMaterial color={EMERALD} transparent opacity={0} blending={THREE.AdditiveBlending} />
+        <lineBasicMaterial
+          color={EMERALD}
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
       </lineSegments>
       <mesh position={[1.95, 0, -0.6]}>
         <sphereGeometry args={[2.8, 32, 32]} />
