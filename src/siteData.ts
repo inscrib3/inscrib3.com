@@ -92,5 +92,6 @@ export const navigation = [
   { label: 'Products', href: '#products' },
   { label: 'Roadmap', href: '#roadmap' },
   { label: 'Open source', href: '#open-source' },
+  { label: 'Web wallet', href: 'https://wallet.inscrib3.com' },
   { label: 'Docs', href: 'https://docs.inscrib3.com' },
 ];
