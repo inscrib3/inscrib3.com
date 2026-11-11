@@ -1437,7 +1437,7 @@ footer {
   position: relative;
   margin-top: 140px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: clamp(30px, 5vw, 80px);
 }
 
@@ -1452,7 +1452,7 @@ footer {
 }
 
 .roadmap-track span {
-  width: 38%;
+  width: 55%;
   height: 100%;
   display: block;
   background: linear-gradient(90deg, var(--emerald), rgba(52, 211, 153, 0.1));

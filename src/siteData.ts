@@ -1,8 +1,14 @@
 export const roadmap = [
   {
     status: 'Available now',
-    title: 'Wallet + Mutinynet App',
-    description: 'Self-custodial wallet plus native swaps, pools, liquidity, price charts, and portable points.',
+    title: 'Inscrib3 Wallet',
+    description: 'Self-custodial Chrome extension and web wallet for Bitcoin and Arkade assets.',
+    active: true,
+  },
+  {
+    status: 'Live on Mutinynet',
+    title: 'Inscrib3 App',
+    description: 'Native swaps, permissionless pools, liquidity, price charts, portable points, and leaderboard.',
     active: true,
   },
   {

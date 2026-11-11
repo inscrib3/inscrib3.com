@@ -20,6 +20,8 @@ test('renders the wallet, Mutinynet App, docs, and open-source projects', () => 
   );
   expect(screen.getByRole('heading', { name: /native liquidity.*built on bitcoin/i })).toBeInTheDocument();
   expect(screen.getByText(/mutinynet points will migrate to mainnet/i)).toBeInTheDocument();
+  expect(screen.getAllByRole('heading', { name: /^inscrib3 wallet$/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole('heading', { name: /^inscrib3 app$/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole('link', { name: /^app\.mutinynet\.inscrib3\.com$/i })).toHaveAttribute(
     'href',
     'https://github.com/inscrib3/app.mutinynet.inscrib3.com',
