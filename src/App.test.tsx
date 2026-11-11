@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders the Inscrib3 positioning and prioritizes the Chrome extension', () => {
+test('renders the wallet, Mutinynet App, docs, and open-source projects', () => {
   render(<App />);
   expect(screen.getByRole('heading', { name: /making bitcoin programmable/i })).toBeInTheDocument();
   expect(screen.getAllByRole('link', { name: /add to chrome/i })[0]).toHaveAttribute(
@@ -14,9 +14,19 @@ test('renders the Inscrib3 positioning and prioritizes the Chrome extension', ()
     'href',
     'https://docs.inscrib3.com',
   );
-  expect(screen.getByRole('link', { name: /docs\.inscrib3\.com/i })).toHaveAttribute(
+  expect(screen.getAllByRole('link', { name: /mutinynet app/i })[0]).toHaveAttribute(
     'href',
-    'https://docs.inscrib3.com',
+    'https://app.mutinynet.inscrib3.com',
+  );
+  expect(screen.getByRole('heading', { name: /native liquidity.*built on bitcoin/i })).toBeInTheDocument();
+  expect(screen.getByText(/mutinynet points will migrate to mainnet/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /^app\.mutinynet\.inscrib3\.com$/i })).toHaveAttribute(
+    'href',
+    'https://github.com/inscrib3/app.mutinynet.inscrib3.com',
+  );
+  expect(screen.getByRole('link', { name: /^arkade-api \/ contracts$/i })).toHaveAttribute(
+    'href',
+    'https://github.com/inscrib3/arkade-api',
   );
   expect(screen.getByRole('heading', { name: /our next chapter stands on years of work/i })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /pipe indexer/i })).toHaveAttribute(

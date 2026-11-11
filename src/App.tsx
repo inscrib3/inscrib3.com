@@ -10,6 +10,17 @@ const EXTENSION_URL = 'https://chromewebstore.google.com/detail/inscrib3/hafphig
 const WALLET_REPOSITORY = 'https://github.com/inscrib3/arkade-wallet';
 const GITHUB_URL = 'https://github.com/inscrib3';
 const DOCS_URL = 'https://docs.inscrib3.com';
+const APP_URL = 'https://app.mutinynet.inscrib3.com';
+const APP_REPOSITORY = 'https://github.com/inscrib3/app.mutinynet.inscrib3.com';
+const API_REPOSITORY = 'https://github.com/inscrib3/arkade-api';
+
+const openSourceProjects = [
+  ['arkade-wallet', WALLET_REPOSITORY],
+  ['app.mutinynet.inscrib3.com', APP_REPOSITORY],
+  ['arkade-api / contracts', API_REPOSITORY],
+  ['inscrib3.com', 'https://github.com/inscrib3/inscrib3.com'],
+  ['docs.inscrib3.com', 'https://github.com/inscrib3/docs.inscrib3.com'],
+];
 
 class SceneErrorBoundary extends React.Component<React.PropsWithChildren, { failed: boolean }> {
   state = { failed: false };
@@ -89,6 +100,8 @@ function Navigation() {
               className={
                 item.label === 'Docs'
                   ? 'docs-nav-link'
+                  : item.label === 'Mutinynet App'
+                    ? 'app-nav-link'
                   : item.label === 'Web wallet'
                     ? 'wallet-nav-link'
                     : undefined
@@ -164,14 +177,15 @@ function Hero() {
     <section className="hero" id="top">
       <div className="hero-grid" />
       <div className="section-inner hero-content">
-        <p className="eyebrow">INSCRIB3 WALLET / EXTENSION + WEB</p>
+        <a className="hero-release" href={APP_URL} target="_blank" rel="noreferrer"><i /> NEW RELEASE · INSCRIB3 APP IS LIVE ON MUTINYNET <Arrow diagonal /></a>
+        <p className="eyebrow">INSCRIB3 / OPEN-SOURCE BITCOIN PRODUCTS</p>
         <h1>
           Making Bitcoin
           <span>Programmable.</span>
         </h1>
         <p className="hero-copy">
-          Put programmable Bitcoin in your browser. Install the extension for one-click access from any tab,
-          or open the web wallet instantly with no installation.
+          Use the self-custodial wallet, then explore native swaps, permissionless pools, liquidity, price charts,
+          and portable rewards in the new Mutinynet App.
         </p>
         <div className="hero-actions">
           <a className="button button-primary button-extension" href={EXTENSION_URL} target="_blank" rel="noreferrer">
@@ -181,8 +195,8 @@ function Hero() {
             Open web wallet <Arrow diagonal />
           </a>
         </div>
-        <a className="hero-explore" href="#products">Compare both ways to use the wallet <Arrow /></a>
-        <p className="hero-trust"><i /> Browser extension <span>·</span> Web wallet <span>·</span> Open source <span>·</span> Built with Arkade</p>
+        <a className="hero-explore" href={APP_URL} target="_blank" rel="noreferrer">Launch the Mutinynet App <Arrow diagonal /></a>
+        <p className="hero-trust"><i /> Wallet <span>·</span> Native liquidity <span>·</span> Open source <span>·</span> Built with Arkade</p>
       </div>
       <a className="scroll-cue" href="#vision">
         <span>Scroll to explore</span>
@@ -400,7 +414,7 @@ function Principles() {
   return (
     <section className="content-section principles-section">
       <div className="section-inner">
-        <SectionLabel number="05">Why we build</SectionLabel>
+        <SectionLabel number="06">Why we build</SectionLabel>
         <Reveal className="principles-heading">
           <h2>Protocols are possibilities.<br />Products create utility.</h2>
         </Reveal>
@@ -416,6 +430,44 @@ function Principles() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function AppRelease() {
+  return (
+    <section className="content-section app-release-section" id="app">
+      <div className="section-inner">
+        <SectionLabel number="05">Now live on Mutinynet</SectionLabel>
+        <Reveal className="app-release-card">
+          <div className="app-release-copy">
+            <p className="overline">INSCRIB3 APP / PUBLIC TEST RELEASE</p>
+            <h2>Native liquidity.<br /><span>Built on Bitcoin.</span></h2>
+            <p>
+              Swap native BTC and Arkade assets, create permissionless pools, provide liquidity, inspect price
+              history, and earn portable points—without wrapped Bitcoin or a custodial deposit account.
+            </p>
+            <div className="app-release-actions">
+              <a className="button button-primary" href={APP_URL} target="_blank" rel="noreferrer">Launch Mutinynet App <Arrow diagonal /></a>
+              <a className="button button-secondary" href={`${DOCS_URL}/app/overview`} target="_blank" rel="noreferrer">Read the App docs <Arrow diagonal /></a>
+            </div>
+            <p className="app-network-note"><i /> MUTINYNET · EXPERIMENTAL · USE TEST FUNDS ONLY</p>
+          </div>
+          <div className="app-feature-grid">
+            {[
+              ['01', 'Native swaps', 'BTC / asset and asset / asset routes with exact integer arithmetic.'],
+              ['02', 'Pools & charts', 'Permissionless liquidity with reserve history from 1 minute to 30 days.'],
+              ['03', 'Portable points', '10 points per opened pool; settled swaps scale with protocol fee sats.'],
+              ['04', 'Live leaderboard', 'Personal rank, score breakdown, wallet activity, and Top 5 players.'],
+            ].map(([number, title, description]) => <div key={number}><span>{number}</span><strong>{title}</strong><p>{description}</p></div>)}
+          </div>
+        </Reveal>
+        <Reveal className="migration-strip">
+          <div><span>POINTS PORTABILITY</span><strong>Mutinynet points will migrate to Mainnet.</strong></div>
+          <p>Rewards are bound to the wallet's stable Taproot identity—not the network-specific address prefix. Keep the same wallet recovery identity to retain attribution.</p>
+          <a href={`${DOCS_URL}/app/points`} target="_blank" rel="noreferrer">How migration works <Arrow diagonal /></a>
+        </Reveal>
       </div>
     </section>
   );
@@ -453,7 +505,7 @@ function Roadmap() {
   return (
     <section className="content-section roadmap-section" id="roadmap">
       <div className="section-inner">
-        <SectionLabel number="06">Product roadmap</SectionLabel>
+        <SectionLabel number="07">Product roadmap</SectionLabel>
         <Reveal className="roadmap-intro">
           <h2>We're only getting started.</h2>
           <p>
@@ -481,12 +533,12 @@ function OpenSource() {
     <section className="content-section open-section" id="open-source">
       <div className="section-inner open-layout">
         <div>
-          <SectionLabel number="07">Open source</SectionLabel>
+          <SectionLabel number="08">Open source</SectionLabel>
           <Reveal>
             <h2>Built in the open.</h2>
             <p>
-              Useful Bitcoin infrastructure grows through experimentation, transparency, and community
-              participation.
+              The wallet, App frontend, coordinator, contracts, website, and documentation are public. Verify how
+              requests, fees, points, approvals, and deployments work—or help improve them.
             </p>
             <a className="button button-primary" href={GITHUB_URL} target="_blank" rel="noreferrer">
               Explore our GitHub <Arrow diagonal />
@@ -494,21 +546,14 @@ function OpenSource() {
           </Reveal>
         </div>
         <Reveal className="code-window" aria-label="Inscrib3 open source repositories">
-          <div className="code-window-top">
-            <span>INSCRIB3 / PUBLIC</span>
-            <i /><i /><i />
-          </div>
-           <div className="code-line"><span>01</span><strong>arkade-wallet</strong><em>public</em></div>
-           <div className="code-line"><span>02</span><strong>inscrib3.com</strong><em>public</em></div>
-           <div className="code-line">
-             <span>03</span>
-             <strong><a href={DOCS_URL} target="_blank" rel="noreferrer">docs.inscrib3.com</a></strong>
-             <em>public</em>
+           <div className="code-window-top">
+             <span>INSCRIB3 / PUBLIC</span>
+             <i /><i /><i />
            </div>
-           <div className="code-pulse"><i /></div>
-          <a href={WALLET_REPOSITORY} target="_blank" rel="noreferrer">
-            github.com/inscrib3/arkade-wallet <Arrow diagonal />
-          </a>
+           {openSourceProjects.map(([name, href], index) => <div className="code-line" key={name}><span>0{index + 1}</span><strong><a href={href} target="_blank" rel="noreferrer">{name}</a></strong><em>public</em></div>)}
+           <a href="https://github.com/inscrib3" target="_blank" rel="noreferrer">
+             github.com/inscrib3 <Arrow diagonal />
+           </a>
         </Reveal>
       </div>
     </section>
@@ -566,6 +611,7 @@ function App() {
         <Journey />
         <Arkade />
         <WalletShowcase />
+        <AppRelease />
         <DeveloperCta />
         <Principles />
         <Roadmap />

@@ -1,8 +1,8 @@
 export const roadmap = [
   {
     status: 'Available now',
-    title: 'Inscrib3 Wallet',
-    description: 'Chrome extension, with a web wallet available as an alternative.',
+    title: 'Wallet + Mutinynet App',
+    description: 'Self-custodial wallet plus native swaps, pools, liquidity, price charts, and portable points.',
     active: true,
   },
   {
@@ -90,6 +90,7 @@ export const navigation = [
   { label: 'Vision', href: '#vision' },
   { label: 'Journey', href: '#journey' },
   { label: 'Products', href: '#products' },
+  { label: 'Mutinynet App', href: 'https://app.mutinynet.inscrib3.com' },
   { label: 'Roadmap', href: '#roadmap' },
   { label: 'Open source', href: '#open-source' },
   { label: 'Web wallet', href: 'https://wallet.inscrib3.com' },
