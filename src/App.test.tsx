@@ -26,10 +26,7 @@ test('renders the wallet, Mutinynet App, docs, and open-source projects', () => 
     'href',
     'https://github.com/inscrib3/app.mutinynet.inscrib3.com',
   );
-  expect(screen.getByRole('link', { name: /^arkade-api \/ contracts$/i })).toHaveAttribute(
-    'href',
-    'https://github.com/inscrib3/arkade-api',
-  );
+  expect(screen.queryByRole('link', { name: /arkade-api/i })).not.toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /our next chapter stands on years of work/i })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /pipe indexer/i })).toHaveAttribute(
     'href',

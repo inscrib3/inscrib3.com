@@ -12,12 +12,10 @@ const GITHUB_URL = 'https://github.com/inscrib3';
 const DOCS_URL = 'https://docs.inscrib3.com';
 const APP_URL = 'https://app.mutinynet.inscrib3.com';
 const APP_REPOSITORY = 'https://github.com/inscrib3/app.mutinynet.inscrib3.com';
-const API_REPOSITORY = 'https://github.com/inscrib3/arkade-api';
 
 const openSourceProjects = [
   ['arkade-wallet', WALLET_REPOSITORY],
   ['app.mutinynet.inscrib3.com', APP_REPOSITORY],
-  ['arkade-api / contracts', API_REPOSITORY],
   ['inscrib3.com', 'https://github.com/inscrib3/inscrib3.com'],
   ['docs.inscrib3.com', 'https://github.com/inscrib3/docs.inscrib3.com'],
 ];
@@ -537,8 +535,8 @@ function OpenSource() {
           <Reveal>
             <h2>Built in the open.</h2>
             <p>
-              The wallet, App frontend, coordinator, contracts, website, and documentation are public. Verify how
-              requests, fees, points, approvals, and deployments work—or help improve them.
+              The wallet, App frontend, website, and documentation are public. Verify the user experience, wallet
+              approvals, interfaces, and deployments—or help improve them.
             </p>
             <a className="button button-primary" href={GITHUB_URL} target="_blank" rel="noreferrer">
               Explore our GitHub <Arrow diagonal />
