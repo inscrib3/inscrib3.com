@@ -32,4 +32,7 @@ test('renders the wallet, Mutinynet App, docs, and open-source projects', () => 
     'href',
     'https://github.com/inscrib3/pipe-indexer',
   );
+  expect(screen.getAllByRole('link', { name: /discord/i })[0]).toHaveAttribute('href', 'https://discord.gg/dZ7GSFb2ST');
+  expect(screen.getAllByRole('link', { name: /x \/ twitter/i })[0]).toHaveAttribute('href', 'https://x.com/inscrib3');
+  expect(screen.getAllByRole('link', { name: /^github/i })[0]).toHaveAttribute('href', 'https://github.com/inscrib3');
 });

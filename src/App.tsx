@@ -9,6 +9,8 @@ const WALLET_URL = 'https://wallet.inscrib3.com';
 const EXTENSION_URL = 'https://chromewebstore.google.com/detail/inscrib3/hafphignbjdmblopkophkohgnphalclg';
 const WALLET_REPOSITORY = 'https://github.com/inscrib3/arkade-wallet';
 const GITHUB_URL = 'https://github.com/inscrib3';
+const X_URL = 'https://x.com/inscrib3';
+const DISCORD_URL = 'https://discord.gg/dZ7GSFb2ST';
 const DOCS_URL = 'https://docs.inscrib3.com';
 const APP_URL = 'https://app.mutinynet.inscrib3.com';
 const APP_REPOSITORY = 'https://github.com/inscrib3/app.mutinynet.inscrib3.com';
@@ -574,6 +576,12 @@ function FinalCta() {
             Continue on the web <Arrow diagonal />
           </a>
         </div>
+        <div className="community-links" aria-label="Inscrib3 community links">
+          <span>Join the community</span>
+          <a href={DISCORD_URL} target="_blank" rel="noreferrer">Discord <Arrow diagonal /></a>
+          <a href={X_URL} target="_blank" rel="noreferrer">X / Twitter <Arrow diagonal /></a>
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
+        </div>
       </Reveal>
     </section>
   );
@@ -585,8 +593,9 @@ function Footer() {
       <Brand />
       <p>Making Bitcoin programmable.</p>
       <div>
+        <a href={DISCORD_URL} target="_blank" rel="noreferrer">Discord</a>
         <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://x.com/inscrib3" target="_blank" rel="noreferrer">X</a>
+        <a href={X_URL} target="_blank" rel="noreferrer">X / Twitter</a>
         <a href="https://arkadeos.com" target="_blank" rel="noreferrer">Arkade</a>
         <a href={DOCS_URL} target="_blank" rel="noreferrer">Docs</a>
         <a href={WALLET_URL} target="_blank" rel="noreferrer">Web wallet</a>

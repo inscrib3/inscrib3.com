@@ -1682,6 +1682,11 @@ footer {
   justify-content: center;
 }
 
+.community-links { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 20px; color: #68716c; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.community-links span { color: #4f5753; }
+.community-links a { color: #a4aca8; transition: color .2s ease; }
+.community-links a:hover { color: var(--emerald); }
+
 footer {
   width: 100%;
   min-height: 130px;
