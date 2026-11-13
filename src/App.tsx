@@ -445,8 +445,8 @@ function AppRelease() {
             <p className="overline">INSCRIB3 APP / PUBLIC TEST RELEASE</p>
             <h2>Native liquidity.<br /><span>Built on Bitcoin.</span></h2>
             <p>
-              Swap native BTC and Arkade assets, create permissionless pools, provide liquidity, inspect price
-              history, and earn portable points—without wrapped Bitcoin or a custodial deposit account.
+              Swap native BTC and Arkade assets, create permissionless pools, launch fixed-supply tokens on BTC
+              bonding curves, and earn portable points—without wrapped Bitcoin or a custodial deposit account.
             </p>
             <div className="app-release-actions">
               <a className="button button-primary" href={APP_URL} target="_blank" rel="noreferrer">Launch Mutinynet App <Arrow diagonal /></a>
@@ -458,8 +458,8 @@ function AppRelease() {
             {[
               ['01', 'Native swaps', 'BTC / asset and asset / asset routes with exact integer arithmetic.'],
               ['02', 'Pools & charts', 'Permissionless liquidity with reserve history from 1 minute to 30 days.'],
-              ['03', 'Portable points', '10 points per opened pool; settled swaps scale with protocol fee sats.'],
-              ['04', 'Live leaderboard', 'Personal rank, score breakdown, wallet activity, and Top 5 players.'],
+              ['03', 'Bitcoin-native launches', 'Fixed supply, curve trading, atomic graduation, and permanent canonical liquidity.'],
+              ['04', 'Portable points', 'Pool and launch creation, settled trades, personal rank, and live leaderboard.'],
             ].map(([number, title, description]) => <div key={number}><span>{number}</span><strong>{title}</strong><p>{description}</p></div>)}
           </div>
         </Reveal>
@@ -515,7 +515,7 @@ function Roadmap() {
         <div className="roadmap-system">
           <div className="roadmap-track" aria-hidden="true"><span /></div>
           {roadmap.map((item, index) => (
-            <Reveal className={`roadmap-node ${item.active ? 'is-active' : ''}`} key={item.status}>
+            <Reveal className={`roadmap-node ${item.active ? 'is-active' : ''}`} key={item.title}>
               <div className="roadmap-marker"><i />0{index + 1}</div>
               <span className="roadmap-status">{item.status}</span>
               <h3>{item.title}</h3>

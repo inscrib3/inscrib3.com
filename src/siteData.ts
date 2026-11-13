@@ -8,18 +8,19 @@ export const roadmap = [
   {
     status: 'Live on Mutinynet',
     title: 'Inscrib3 App',
-    description: 'Native swaps, permissionless pools, liquidity, price charts, portable points, and leaderboard.',
+    description: 'Native swaps, permissionless pools, fixed-supply launches, price charts, portable points, and leaderboard.',
+    active: true,
+  },
+  {
+    status: 'Live on Mutinynet',
+    title: 'Bitcoin-native launchpad',
+    description: 'Wallet-issued fixed supply, BTC bonding curves, atomic graduation, and permanent canonical liquidity.',
     active: true,
   },
   {
     status: 'Next release',
     title: 'In development',
     description: 'The next product node will be revealed when it is ready.',
-  },
-  {
-    status: 'Future node',
-    title: 'Future experiments',
-    description: 'Open space for useful Bitcoin-native applications.',
   },
 ];
 
