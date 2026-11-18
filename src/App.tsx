@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import './App.css';
 import logo from './logo.png';
 import { journey, navigation, principles, roadmap } from './siteData';
+import { useAutomaticLanguage } from './localization';
 
 const ProgrammableScene = lazy(() => import('./ProgrammableScene'));
 
@@ -607,6 +608,8 @@ function Footer() {
 }
 
 function App() {
+  useAutomaticLanguage();
+
   return (
     <div className="site">
       <a className="skip-link" href="#vision">Skip to content</a>

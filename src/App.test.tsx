@@ -1,6 +1,24 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { applyLanguage, detectSiteLanguage } from './localization';
+
+test('detects Chinese from the browser language and defaults to English', () => {
+  expect(detectSiteLanguage(['zh-CN', 'en-US'])).toBe('zh-CN');
+  expect(detectSiteLanguage(['zh-TW'])).toBe('zh-CN');
+  expect(detectSiteLanguage(['en-US', 'zh-CN'])).toBe('en');
+  expect(detectSiteLanguage([])).toBe('en');
+});
+
+test('applies the Chinese translation to content and accessibility labels', () => {
+  const container = document.createElement('div');
+  container.innerHTML = '<h1>Making Bitcoin</h1><a aria-label="Open navigation">Open web wallet</a>';
+  applyLanguage(container, 'zh-CN');
+
+  expect(container).toHaveTextContent('让比特币');
+  expect(container).toHaveTextContent('打开网页钱包');
+  expect(container.querySelector('a')).toHaveAttribute('aria-label', '打开导航');
+});
 
 test('renders the wallet, Mutinynet App, docs, and open-source projects', () => {
   render(<App />);
